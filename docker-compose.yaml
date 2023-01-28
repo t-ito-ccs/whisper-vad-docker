@@ -4,7 +4,6 @@ services:
     image: registry.gitlab.com/aadnk/whisper-webui:latest
     # コンテナ名を明示的に指定する
     container_name: whisper-vad-webui
-    # docker:dockerユーザを指定する
     environment:
       gpus: "all"
       restart: "on-failure:15"
