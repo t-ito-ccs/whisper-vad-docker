@@ -1,0 +1,32 @@
+version: "3"
+services:
+  whisper-vad-webui:
+    image: registry.gitlab.com/aadnk/whisper-webui:latest
+    # コンテナ名を明示的に指定する
+    container_name: whisper-vad-webui
+    # docker:dockerユーザを指定する
+    environment:
+      gpus: "all"
+      restart: "on-failure:15"
+    # ホスト名を明示的に指定する
+    #hostname: whisper-vad-webui
+    ports:
+      - "7860:7860/tcp"
+    restart: always
+    # ネットワークモードの設定 
+    network_mode: "host"
+    # volumesの指定
+    volumes:
+      - ./volumes/.cache/whisper:/root/.cache/whisper
+      - ./volumes/app/data:/app/data
+    # ログのサイズを指定
+    logging:
+      options:
+        max-size: "200k"
+        max-file: "10"
+    # GPUの設定 
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
